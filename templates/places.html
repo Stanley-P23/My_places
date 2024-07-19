@@ -1,0 +1,250 @@
+
+{% include "header.html" %}
+
+
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7aqw6qItyvTt56YQfqXGlIOomtdPtiAE"></script>
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+  #mainNav .navbar-nav > li.nav-item > a.nav-link {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.0625em;
+  text-transform: uppercase;
+}
+@media (min-width: 992px) {
+  #mainNav {
+    border-bottom: 1px solid transparent;
+    background: #5f9293
+;
+  }
+  #mainNav .navbar-brand {
+    color: #fff;
+  }
+  #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  #mainNav .navbar-nav > li.nav-item > a.nav-link {
+    color: #fff;
+  }
+  #mainNav .navbar-nav > li.nav-item > a.nav-link:focus, #mainNav .navbar-nav > li.nav-item > a.nav-link:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+    .btn-toggle {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .btn-toggle {
+        display: inline-block;
+      }
+      .side-column, .main-column {
+        display: none;
+      }
+    }
+    #map {
+      height: 92vh; /* Full viewport height */
+
+    }
+
+
+    .imagine{
+     max-width:300px;
+     height: auto;
+}
+
+
+      </style>
+
+  </style>
+</head>
+
+<header>
+
+
+
+  <div class="container py-4">
+  </div>
+   <div class="container py-3">
+  </div>
+</header>
+
+
+
+
+<!-- Main Content-->
+<main class="">
+    <script src="{{ url_for('static', filename='js/script_places.js') }}"></script>
+  <div class="container  text-right text-end">
+
+
+      <button class="  btn fa-stack fa-lg  btn-toggle btn-lg" id="toggleLeftColumn">
+          <i class="fa-solid fa-filter"></i>
+      </button>
+
+            <button class=" btn fa-stack fa-lg  btn-toggle btn-lg" id="toggleMainColumn">
+         <i class="fa-solid fa-list"></i>
+      </button>
+
+
+      <button class=" btn fa-stack fa-lg  btn-toggle btn-lg" id="toggleRightColumn">
+          <i class="fa-solid fa-map-location-dot"></i>
+      </button>
+
+
+
+  </div>
+<div class="row" >
+    <!-- Left Column -->
+        <div class="col-12 col-md-3 side-column pt-4" id="leftColumn">
+            <div class="px-2">
+                <input class="form-control my-2" id="myInput" type="text" placeholder="Search by name">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="foodCheckbox" value="food">
+                    <label class="form-check-label" for="foodCheckbox">
+                        Food
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="myFoodCheckbox" value="my_food">
+                    <label class="form-check-label" for="myFoodCheckbox">
+                        My Food
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="tableCheckbox" value="table">
+                    <label class="form-check-label" for="tableCheckbox">
+                        Table
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="socketCheckbox" value="socket">
+                    <label class="form-check-label" for="socketCheckbox">
+                        Socket
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="culturalCheckbox" value="cultural">
+                    <label class="form-check-label" for="culturalCheckbox">
+                        Cultural
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="outdoorCheckbox" value="outdoor_activity">
+                    <label class="form-check-label" for="outdoorCheckbox">
+                        Outdoor Activity
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="studyCheckbox" value="work_study">
+                    <label class="form-check-label" for="studyCheckbox">
+                        Study/Work
+                    </label>
+                </div>
+                <div class="btn-group my-3">
+                    <button class="btn btn-primary" id="filterButton">Apply Filters</button>
+                    <button class="btn btn-secondary" id="clearFiltersButton">Clear Filters</button>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+<!--    Middle column-->
+    <div class="col-12 col-md-5 main-column pt-4 " id="mainColumn">
+     <div class="">
+
+
+
+
+     <ul class="list-group list-group-flush container" id="myList">
+  {% for place in places %}
+  <li class="list-group-item">
+    <div class="row">
+      <!-- Photo Column -->
+      <div class="col-md-4 mb-3 mb-md-0">
+          <a href="{{url_for('place', place_id=place.id) }}"><img class="img-fluid " src="{{ url_for('static', filename='assets/photos/' + place.photo_address) }}" alt="Photo - {{ place.name }}"></a>
+      </div>
+
+      <!-- Data Column -->
+      <div class="col-md-8">
+        <div class="fs-4">{{ place.name }}</div>
+
+                            {% if place.att_food  %}
+                          <i class="fa-solid fa-utensils"></i>
+                            {% endif %}
+
+                            {% if place.att_my_food %}
+                          <i class="fa-solid fa-suitcase"></i>
+                            {% endif %}
+
+                            {% if place.att_table %}
+                          <i class="fa-solid fa-couch"></i>
+                            {% endif %}
+
+                            {% if place.att_socket %}
+                          <i class="fa-solid fa-plug"></i>
+                            {% endif %}
+
+                            {% if place.att_cultural %}
+                          <i class="fa-solid fa-masks-theater"></i>
+                            {% endif %}
+
+                            {% if place.att_outdoor_activity %}
+                          <i class="fa-solid fa-bicycle"></i>
+                            {% endif %}
+
+                            {% if place.att_work_study %}
+                          <i class="fa-solid fa-computer"></i>
+                            {% endif %}
+
+
+        <br>
+        <span class="fs-6 latitude">{{ place.coordinate1 }}</span>&nbsp;&nbsp;&nbsp;<span class="fs-6 longitude">{{ place.coordinate2 }}</span>
+
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+    </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="col-12 col-md-4 side-column" id="rightColumn" >
+     <div class="">
+      <div id="map"></div>
+</div>
+    </div>
+  </div>
+</main>
+
+
+
+
+
+{% include "footer.html" %}

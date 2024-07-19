@@ -1,0 +1,67 @@
+{% include "header.html" %}
+
+<!-- Page Header-->
+<header
+
+  class="masthead"
+  style="background-image: url('../static/assets/photos/{{place.photo_address}}')"
+>
+
+
+
+
+</header>
+<!-- Main Content-->
+<main class="mb-4 px-5">
+
+
+<h1>{{place.name}}
+
+  {% if place.att_food  %}&nbsp&nbsp&nbsp&nbsp
+                          <span class="text-secondary"><i class="fa-solid fa-utensils"></i>
+                            {% endif %}
+
+                            {% if place.att_my_food %}
+                          <i class="fa-solid fa-suitcase"></i>
+                            {% endif %}
+
+                            {% if place.att_table %}
+                          <i class="fa-solid fa-couch"></i>
+                            {% endif %}
+
+                            {% if place.att_socket %}
+                          <i class="fa-solid fa-plug"></i>
+                            {% endif %}
+
+                            {% if place.att_cultural %}
+                          <i class="fa-solid fa-masks-theater"></i>
+                            {% endif %}
+
+                            {% if place.att_outdoor_activity %}
+                          <i class="fa-solid fa-bicycle"></i>
+                            {% endif %}
+
+                            {% if place.att_work_study %}
+                          <i class="fa-solid fa-computer"></i>
+                            {% endif %}
+                            </span>
+
+
+</h1>
+
+<span>{{place.description}}</span>
+<br><br><br><br>
+  <!-- Button to view location on Google Maps -->
+  <a href="https://maps.google.com/maps?q={{ place.coordinate1 }},{{ place.coordinate2 }}"
+     class="btn btn-primary" target="_blank">
+    Navigate with Google Maps
+  </a>
+
+
+
+
+
+
+</main>
+
+{% include "footer.html" %}

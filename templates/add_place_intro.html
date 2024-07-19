@@ -1,0 +1,88 @@
+{% include "header.html" %}
+
+<head>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    #mainNav .navbar-nav > li.nav-item > a.nav-link {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.0625em;
+      text-transform: uppercase;
+    }
+    @media (min-width: 992px) {
+      #mainNav {
+        border-bottom: 1px solid transparent;
+        background: #5f9293;
+      }
+      #mainNav .navbar-brand {
+        color: #fff;
+      }
+      #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      #mainNav .navbar-nav > li.nav-item > a.nav-link {
+        color: #fff;
+      }
+      #mainNav .navbar-nav > li.nav-item > a.nav-link:focus, #mainNav .navbar-nav > li.nav-item > a.nav-link:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+    #map {
+      height: 400px;
+      display: none; /* Hide the map initially */
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #pac-input {
+      background-color: #fff;
+      margin: 0px;
+      padding: 0 11px 0 13px;
+      text-overflow: ellipsis;
+      width: 400px;
+    }
+    #pac-input:focus {
+
+    }
+    #confirm-btn {
+      display: none; /* Hide the button initially */
+    }
+    #confirm-btn.visible {
+      display: inline-block; /* Show the button when visible class is added */
+    }
+  </style>
+</head>
+<body>
+
+  <div id="mainNav">
+    <!-- Navigation content -->
+  </div>
+
+  <header>
+    <div class="container py-4"></div>
+    <div class="container py-3"></div>
+  </header>
+
+  <div class="container py-5">
+    <div class=" fs-3">Choose the location:</div>
+    <p><input id="pac-input" class="controls" type="text" placeholder="Search for it"></p>
+    <br>
+    <div id="map"></div>
+    <div id="details"></div>
+    <div id="button"></div>
+    <div>
+      <h1 id="latitude"></h1>
+      <a id="confirm-btn" class="btn btn-primary my-5" href="#">Confirm localization</a>
+    </div>
+    <div class="container py-2"></div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/google_maps.js') }}"></script>
+
+</body>
+</html>
